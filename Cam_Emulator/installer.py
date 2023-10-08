@@ -215,9 +215,6 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                 exit()
             else:
                 value = cam.get(number)
-
-                if self.hostname in ['novaler4k', 'novaler4kse', 'novaler4kpro','multibox', 'multiboxse', 'multiboxpro']:
-                    pass
                 self.file = "{}_{}_all.{}".format(value, self.info(value.split('-')[-1]), self.extension)
 
                 if self.check(value):
