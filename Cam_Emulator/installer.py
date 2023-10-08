@@ -257,8 +257,10 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
 
                 stb_image = popen("cut /etc/opkg/all-feed.conf -d'-' -f1 | awk '{ print $2 }'").read().replace("\n","")
                 if stb_image == "openpli":
-                    system(" ".join([self.install, "softcam-support"]))
-                    sleep(1)
+                    if not self.check('softcam-support'):
+                        system('clear')
+                        system(" ".join([self.install, "softcam-support"]))
+                        sleep(1)
 
 
 if __name__ == '__main__':
