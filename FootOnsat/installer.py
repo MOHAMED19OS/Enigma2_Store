@@ -3,6 +3,7 @@
 
 from __future__ import print_function
 
+import ssl
 from os import chdir, popen, remove, system
 from os.path import isdir, isfile, join
 from re import MULTILINE, findall
@@ -25,6 +26,7 @@ G = "\033[0;32m"  # green (process)
 B = "\033[0;36m"  # blue (choice)
 Y = "\033[0;33m"  # yellow (info)
 
+ssl._create_default_https_context = ssl._create_unverified_context
 
 class FootOnsat():
     URL = 'https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/FootOnsat/'
