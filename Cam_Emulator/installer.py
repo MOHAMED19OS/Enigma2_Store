@@ -6,6 +6,7 @@ from __future__ import print_function
 from os import chdir, chmod, popen, remove, system
 from os.path import exists, isfile, join
 from re import MULTILINE, findall
+from socket import gethostname
 from sys import version_info
 from time import sleep
 
@@ -35,6 +36,7 @@ class Emulator():
     page = "https://github.com/MOHAMED19OS/Enigma2_Store/tree/main/Cam_Emulator"
 
     def __init__(self):
+        self.hostname = gethostname()
         self.package = 'enigma2-plugin-softcams-'
 
     def Stb_Image(self):
@@ -213,6 +215,9 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                 exit()
             else:
                 value = cam.get(number)
+
+                if self.hostname in ['novaler4k', 'novaler4kse', 'novaler4kpro','multibox', 'multiboxse', 'multiboxpro']:
+                    pass
                 self.file = "{}_{}_all.{}".format(value, self.info(value.split('-')[-1]), self.extension)
 
                 if self.check(value):
@@ -223,6 +228,10 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                     sleep(0.8)
 
                 chdir('/tmp')
+
+                if "oscam" in value:
+                    if self.hostname in ['novaler4k', 'novaler4kse', 'novaler4kpro','multibox', 'multiboxse', 'multiboxpro']:
+                        self.file.replace("oscam","oscam-nova")
 
                 if "powercam" in value or "ultracam" in value:
                     CheckLib = popen(" ".join([self.list, 'libcrypto-compat-1.0.0'])).read().split(' - ')[0]
