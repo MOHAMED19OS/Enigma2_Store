@@ -3,6 +3,7 @@
 
 from __future__ import print_function
 
+import ssl
 from os import chdir, chmod, popen, remove, system
 from os.path import exists, isfile, join
 from re import MULTILINE, findall
@@ -25,6 +26,8 @@ R = "\033[0;31m"  # red (error)
 G = "\033[0;32m"  # green (process)
 B = "\033[0;36m"  # blue (choice)
 Y = "\033[0;33m"  # yellow (info)
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 
 if hasattr(__builtins__, 'raw_input'):
