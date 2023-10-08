@@ -255,6 +255,11 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                 if "supcam" in value:
                     self.FixEmu()
 
+                stb_image = popen("cut /etc/opkg/all-feed.conf -d'-' -f1 | awk '{ print $2 }'").read().replace("\n","")
+                if stb_image == "openpli":
+                    system(" ".join([self.install, "softcam-support"]))
+                    sleep(1)
+
 
 if __name__ == '__main__':
     build = Emulator()
