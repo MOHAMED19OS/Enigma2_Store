@@ -29,8 +29,8 @@ Y = "\033[0;33m"  # yellow (info)
 
 
 class Setting():
-    link = 'https://raw.githubusercontent.com/MOHAMED19OS/Download/main/Channel/'
-    page = 'https://github.com/MOHAMED19OS/Download/tree/main/Channel'
+    link = 'https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/Channel/'
+    page = 'https://github.com/MOHAMED19OS/Enigma2_Store/tree/main/Channel'
 
     def __init__(self):
         self.date = datetime.now().strftime("%d-%m-%Y %X")
