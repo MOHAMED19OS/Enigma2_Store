@@ -26,3 +26,9 @@ wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma
 ```fish
 wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/Quran/installer.sh -qO - | /bin/sh
 ```
+
+### ✔️ Installation SubsSupport
+
+```fish
+wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/SubsSupport/installer.py -qO - | python
+```
