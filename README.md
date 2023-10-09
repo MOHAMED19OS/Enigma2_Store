@@ -9,6 +9,12 @@
 python -c "$(wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/Cam_Emulator/installer.py -qO -)"
 ```
 
+### ✔️ Installation Channel
+
+```fish
+wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/Channel/installer.py -qO - | python
+```
+
 ### ✔️ Installation FootOnsat
 
 ```fish
