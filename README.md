@@ -24,5 +24,5 @@ wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma
 ### ✔️ Installation Quran
 
 ```fish
-wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Download/main/Quran/installer.sh -qO - | /bin/sh
+wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/Quran/installer.sh -qO - | /bin/sh
 ```
