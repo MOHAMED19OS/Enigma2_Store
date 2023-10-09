@@ -20,3 +20,9 @@ wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma
 ```fish
 wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/FlashOnline/installer.py -qO - | python
 ```
+
+### ✔️ Installation Quran
+
+```fish
+wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Download/main/Quran/installer.sh -qO - | /bin/sh
+```
