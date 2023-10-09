@@ -6,7 +6,7 @@ from __future__ import print_function
 import ssl
 from os import chdir, popen, remove, system
 from os.path import isdir, isfile, join
-from re import MULTILINE, findall
+from re import MULTILINE, S, findall
 from shutil import move
 from sys import version_info
 from time import sleep
@@ -33,6 +33,7 @@ class FootOnsat():
     page = "https://github.com/MOHAMED19OS/Enigma2_Store/tree/main/FootOnsat"
 
     def __init__(self):
+        self.NamePkg = "enigma2-plugin-extensions-footonsat"
         self.package = ['python-sqlite3','python-six','alsa-utils-aplay']
         self.plugin_path='/usr/lib/enigma2/python/Plugins/Extensions/FootOnSat'
 
@@ -63,24 +64,22 @@ class FootOnsat():
                 'User-Agent', 'Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0')
             response = urlopen(req)
             link = response.read().decode('utf-8')
-            data_deb = findall('<script type=.*?deb["\'],["\']path["\']:["\']FootOnsat/(.+?)["\']',link)[0]
-            data_ipk = findall('<script type=.*?ipk["\'],["\']path["\']:["\']FootOnsat/(.+?)["\']',link)[0]
-            return data_deb,data_ipk
+            UrlData = findall('data-target.+?footonsat_(.+?)_',link,S)
+            return UrlData[0]
         except HTTPError as e:
-            print('HTTP Error code: ', e.code)
+            print('{}HTTP Error code{}: '.format(Y,C), e.code)
         except URLError as e:
-            print('URL Error: ', e.reason)
+            print('{}URL Error{}: '.format(R,C), e.reason)
 
     def banner(self):
         system('clear')
         print(B, r'''
-  _______   ______      ______  ___________  ______    _____  ___    ________     __  ___________
- /"     "| /    " \    /    " \("     _   ")/    " \  (\"   \|"  \  /"       )   /""\("     _   ")
-(: ______)// ____  \  // ____  \)__/  \\__/// ____  \ |.\\   \    |(:   \___/   /    \)__/  \\__/
- \/    | /  /    ) :)/  /    ) :)  \\_ /  /  /    ) :)|: \.   \\  | \___  \    /' /\  \  \\_ /
- // ___)(: (____/ //(: (____/ //   |.  | (: (____/ // |.  \    \. |  __/  \\  //  __'  \ |.  |
-(:  (    \        /  \        /    \:  |  \        /  |    \    \ | /" \   :)/   /  \\  \\:  |
- \__/     \"_____/    \"_____/      \__|   \"_____/    \___|\____\)(_______/(___/    \___)\__|''', C)
+d88888b  .d88b.   .d88b.  d888888b  .d88b.  d8b   db .d8888.  .d8b.  d888888b
+88'     .8P  Y8. .8P  Y8. `~~88~~' .8P  Y8. 888o  88 88'  YP d8' `8b `~~88~~'
+88ooo   88    88 88    88    88    88    88 88V8o 88 `8bo.   88ooo88    88
+88~~~   88    88 88    88    88    88    88 88 V8o88   `Y8b. 88~~~88    88
+88      `8b  d8' `8b  d8'    88    `8b  d8' 88  V888 db   8D 88   88    88
+YP       `Y88P'   `Y88P'     YP     `Y88P'  VP   V8P `8888Y' YP   YP    YP''', C)
 
     def check(self, pkg):
         with open(self.status) as file:
@@ -97,9 +96,9 @@ class FootOnsat():
         self.Stb_Image()
 
         if self.Stb_Image():
-            file = self.info()[1]
+            FileName_ = "{}_{}_all.ipk".format(self.NamePkg,self.info())
         else:
-            file = self.info()[0]
+            FileName_ = "{}_{}_all.deb".format(self.NamePkg,self.info())
 
         for filename in self.package:
             if not self.check(filename):
@@ -115,29 +114,28 @@ class FootOnsat():
         sleep(2)
 
 
-        if isfile(join('/tmp/', file)):
-            remove(join('/tmp/', file))
+        if isfile(join('/tmp/', FileName_)):
+            remove(join('/tmp/', FileName_))
             sleep(0.8)
 
-        version_stb = self.version(file.split('_')[0])
+        version_stb = self.version(self.NamePkg)
 
-        if version_stb == file.split('_')[1]:
+        if version_stb == self.info():
             system('clear')
-            print('you are use the latest version: {}{}{}\n'.format(
-                Y, file.split('_')[1], C).capitalize())
+            print('you are use the latest version: {}{}{}\n'.format(Y, self.info(), C).capitalize())
             sleep(0.8)
             print("\n   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
             exit()
         elif version_stb == '':
             pass
-        elif version_stb > file.split('_')[1]:
+        elif version_stb > self.info():
             print("\n   Written by {}MOHAMED_OS{} (͡๏̯͡๏)\n".format(R, C))
             exit()
         else:
             if isfile(join(self.plugin_path,'db/footonsat.db')):
                 print("Keep old db....")
                 move('/usr/lib/enigma2/python/Plugins/Extensions/FootOnSat/db/footonsat.db','/tmp')
-            system(" ".join([self.uninstall, file.split('_')[0]]))
+            system(" ".join([self.uninstall, self.NamePkg]))
 
         system('clear')
         print("{}Please Wait{} while we Download And Install {}FootOnsat{} ...".format(
@@ -145,14 +143,14 @@ class FootOnsat():
 
         chdir('/tmp')
 
-        urlretrieve("".join([self.URL, file]), filename=file)
+        urlretrieve("".join([self.URL, FileName_]), filename=FileName_)
         sleep(0.8)
 
-        system(" ".join([self.install, file]))
+        system(" ".join([self.install, FileName_]))
         sleep(1)
 
-        if isfile(join('/tmp/', file)):
-            remove(join('/tmp/', file))
+        if isfile(join('/tmp/', FileName_)):
+            remove(join('/tmp/', FileName_))
             sleep(0.8)
 
         if isdir(self.plugin_path):
