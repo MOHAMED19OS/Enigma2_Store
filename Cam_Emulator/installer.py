@@ -7,7 +7,6 @@ import ssl
 from os import chdir, chmod, popen, remove, system
 from os.path import exists, isfile, join
 from re import MULTILINE, findall
-from socket import gethostname
 from sys import version_info
 from time import sleep
 
@@ -39,7 +38,6 @@ class Emulator():
     page = "https://github.com/MOHAMED19OS/Enigma2_Store/tree/main/Cam_Emulator"
 
     def __init__(self):
-        self.hostname = gethostname()
         self.package = 'enigma2-plugin-softcams-'
 
     def Stb_Image(self):
@@ -229,10 +227,6 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
 
                 chdir('/tmp')
 
-                if "oscam" in value:
-                    if self.hostname in ['novaler4k', 'novaler4kse', 'novaler4kpro','multibox', 'multiboxse', 'multiboxpro']:
-                        self.file.replace("oscam","oscam-nova")
-
                 if "powercam" in value or "ultracam" in value:
                     CheckLib = popen(" ".join([self.list, 'libcrypto-compat-1.0.0'])).read().split(' - ')[0]
                     if CheckLib == 'libcrypto-compat-1.0.0':
@@ -246,8 +240,7 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                             system(" ".join([self.install, "libcrypto-compat"]))
 
                 system('clear')
-                print("{}Please Wait{} while we Download And Install {}{}{} ...".format(
-                    G, C, Y, value, C))
+                print("{}Please Wait{} while we Download And Install {}{}{} ...".format(G, C, Y, value, C))
 
                 urlretrieve("".join([self.URL, self.file]), filename=self.file)
                 sleep(0.8)
