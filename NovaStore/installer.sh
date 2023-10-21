@@ -21,6 +21,7 @@ fi
 ###########################################
 # Configure where we can find things here #
 pyVersion=$(python -c"from sys import version_info; print(version_info[0])")
+stb_image=$(cut /etc/opkg/all-feed.conf -d'-' -f1 | awk '{ print $2 }')
 SitUrl='https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/NovaStore'
 TmpDir='/var/volatile/tmp'
 
@@ -59,6 +60,7 @@ if [ -z "$Pkg" ]; then
     echo "  2 - NovalerTV"
     echo "  3 - SupTV"
     echo "  4 - UltraCam"
+    echo "  5 - Chromium2"
     echo
     echo "  x - Exit"
     echo
@@ -70,6 +72,7 @@ if [ -z "$Pkg" ]; then
     "2") Pkg=enigma2-plugin-extensions-novalertv ;;
     "3") Pkg=enigma2-plugin-extensions-suptv ;;
     "4") Pkg=enigma2-plugin-extensions-ultracam ;;
+    "5") Pkg=enigma2-plugin-extensions-chromium2 ;;
     x)
         clear
         echo
@@ -93,6 +96,8 @@ elif [ "$choice" = 3 ]; then
     VerPkg='5.0-r0'
 elif [ "$choice" = 4 ]; then
     VerPkg='2.1-r0'
+elif [ "$choice" = 5 ]; then
+    VerPkg='1.0+20221219-r0'
 fi
 
 IFS='-'
