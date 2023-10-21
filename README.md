@@ -54,5 +54,5 @@ wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma
 ### ✔️ Installation NovaStore
 
 ```fish
-wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/NovaStore/installer.sh -qO - | /bin/sh
+sh -c "$(wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/NovaStore/installer.sh -qO -)"
 ```
