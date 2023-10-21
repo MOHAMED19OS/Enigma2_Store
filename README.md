@@ -50,3 +50,9 @@ wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma
 ```fish
 wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/PlutoTV/installer.sh -qO - | /bin/sh
 ```
+
+### ✔️ Installation NovaStore
+
+```fish
+wget --no-check-certificate https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/NovaStore/installer.sh -qO - | /bin/sh
+```
