@@ -55,6 +55,7 @@ if [ -z "$Pkg" ]; then
     echo "  3 - SupTV"
     echo "  4 - UltraCam"
     echo "  5 - Chromium2"
+    echo "  6 - Novaler Store"
     echo
     echo "  x - Exit"
     echo
@@ -67,6 +68,7 @@ if [ -z "$Pkg" ]; then
     "3") Pkg=enigma2-plugin-extensions-suptv ;;
     "4") Pkg=enigma2-plugin-extensions-ultracam ;;
     "5") Pkg=enigma2-plugin-extensions-chromium2 ;;
+    "6") Pkg=enigma2-plugin-extensions-novalerstore ;;
     x)
         clear
         echo
@@ -92,6 +94,8 @@ elif [ "$choice" = 4 ]; then
     VerPkg='2.1-r0'
 elif [ "$choice" = 5 ]; then
     VerPkg='1.0+20221219-r0'
+elif [ "$choice" = 6 ]; then
+    VerPkg='2.0-r0'
 fi
 
 IFS='-'
