@@ -21,22 +21,9 @@ fi
 ###########################################
 # Configure where we can find things here #
 pyVersion=$(python -c"from sys import version_info; print(version_info[0])")
-stb_image=$(cut /etc/opkg/all-feed.conf -d'-' -f1 | awk '{ print $2 }')
 SitUrl='https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/NovaStore'
 TmpDir='/var/volatile/tmp'
 
-#####################
-
-install() {
-    if ! grep -qs "Package: $1" '/var/lib/opkg/status'; then
-        echo -e ">>>>   Please Wait Install ${Green}$1${Color_Off}   <<<<"
-        echo
-        opkg install "$1"
-        wait
-        sleep 0.8
-        clear
-    fi
-}
 ####################
 #  Depends Checking  #
 arrVar=("ffmpeg" "gstplayer" "exteplayer3" "enigma2-plugin-systemplugins-serviceapp")
@@ -46,8 +33,15 @@ if [ "${pyVersion}" = 3 ]; then
 else
     arrVar+=("python-core" "python-futures" "python-image" "python-imaging" "python-json" "python-multiprocessing" "python-requests" "python-cryptography")
 fi
-for i in "${arrVar[@]}"; do
-    install "$i"
+for PkgFile in "${arrVar[@]}"; do
+    if ! grep -qs "Package: $PkgFile" '/var/lib/opkg/status'; then
+        echo -e ">>>>   Please Wait Install ${Green}${PkgFile}${Color_Off}   <<<<"
+        echo
+        opkg install "${PkgFile}"
+        wait
+        sleep 0.8
+        clear
+    fi
 done
 
 ####################################
