@@ -44,6 +44,11 @@ for PkgFile in "${arrVar[@]}"; do
     fi
 done
 
+if [ "$(opkg info libcrypto-compat | grep -Fic Package)" = 1 ]; then
+    LibPkg="libcrypto-compat"
+else
+    LibPkg="libcrypto-compat-1.0.0"
+fi
 ####################################
 # Build
 if [ -z "$Pkg" ]; then
@@ -56,6 +61,7 @@ if [ -z "$Pkg" ]; then
     echo "  4 - UltraCam"
     echo "  5 - Chromium2"
     echo "  6 - Novaler Store"
+    echo "  7 - NovaCam Supreme"
     echo
     echo "  x - Exit"
     echo
@@ -69,6 +75,7 @@ if [ -z "$Pkg" ]; then
     "4") Pkg=enigma2-plugin-extensions-ultracam ;;
     "5") Pkg=enigma2-plugin-extensions-chromium2 ;;
     "6") Pkg=enigma2-plugin-extensions-novalerstore ;;
+    "7") Pkg=enigma2-plugin-extensions-novacam-supreme ;;
     x)
         clear
         echo
@@ -96,6 +103,8 @@ elif [ "$choice" = 5 ]; then
     VerPkg='1.0+20221219-r0'
 elif [ "$choice" = 6 ]; then
     VerPkg='2.0-r0'
+elif [ "$choice" = 7 ]; then
+    VerPkg='9.0-r0'
 fi
 
 IFS='-'
@@ -132,6 +141,12 @@ echo -e "${Yellow}Insallling ${PkgName[3]} plugin Please Wait ......${Color_Off}
 opkg install --force-overwrite $TmpDir/"${Pkg}"_"${VerPkg}"_all.ipk
 
 rm -rf $TmpDir/"${Pkg:?}"* >/dev/null 2>&1
+
+if [ "$choice" = 7 ]; then
+    if [ "$(opkg list-installed | grep -Fic ${LibPkg})" = 0 ]; then
+        opkg install ${LibPkg}
+    fi
+fi
 
 sleep 0.8
 sync
