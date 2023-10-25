@@ -62,6 +62,7 @@ if [ -z "$Pkg" ]; then
     echo "  5 - Chromium2"
     echo "  6 - Novaler Store"
     echo "  7 - NovaCam Supreme"
+    echo "  8 - NovaCam SupTV Supreme"
     echo
     echo "  x - Exit"
     echo
@@ -76,6 +77,7 @@ if [ -z "$Pkg" ]; then
     "5") Pkg=enigma2-plugin-extensions-chromium2 ;;
     "6") Pkg=enigma2-plugin-extensions-novalerstore ;;
     "7") Pkg=enigma2-plugin-extensions-novacam-supreme ;;
+    "8") Pkg=enigma2-plugin-extensions-novacam-suptv-supreme ;;
     x)
         clear
         echo
@@ -103,7 +105,7 @@ elif [ "$choice" = 5 ]; then
     VerPkg='1.0+20221219-r0'
 elif [ "$choice" = 6 ]; then
     VerPkg='2.0-r0'
-elif [ "$choice" = 7 ]; then
+elif [ "$choice" = 7 ] || [ "$choice" = 8 ]; then
     VerPkg='9.0-r0'
 fi
 
@@ -142,7 +144,7 @@ opkg install --force-overwrite $TmpDir/"${Pkg}"_"${VerPkg}"_all.ipk
 
 rm -rf $TmpDir/"${Pkg:?}"* >/dev/null 2>&1
 
-if [ "$choice" = 7 ]; then
+if [ "$choice" = 7 ] || [ "$choice" = 8 ]; then
     if [ "$(opkg list-installed | grep -Fic ${LibPkg})" = 0 ]; then
         opkg install ${LibPkg}
     fi
