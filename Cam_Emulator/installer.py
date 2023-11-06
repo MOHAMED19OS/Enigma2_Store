@@ -18,7 +18,6 @@ else:
 
     from urllib2 import HTTPError, Request, URLError, urlopen
 
-
 # colors
 C = "\033[0m"     # clear (end)
 R = "\033[0;31m"  # red (error)
@@ -28,10 +27,8 @@ Y = "\033[0;33m"  # yellow (info)
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
-
 if hasattr(__builtins__, 'raw_input'):
     input = raw_input
-
 
 class Emulator():
     URL = 'https://raw.githubusercontent.com/MOHAMED19OS/Enigma2_Store/main/Cam_Emulator/'
@@ -48,14 +45,15 @@ class Emulator():
             self.list = 'opkg list'
             self.uninstall = 'opkg remove --force-depends'
             self.extension = 'ipk'
+            return isfile('/etc/opkg/opkg.conf')
         else:
             self.status = '/var/lib/dpkg/status'
             self.update = 'apt-get update >/dev/null 2>&1'
-            self.install = 'apt-get install'
+            self.install = 'apt-get install --fix-broken --yes --assume-yes'
             self.list = 'apt-get list'
-            self.uninstall = 'apt-get purge --auto-remove'
+            self.uninstall = 'apt-get purge --auto-remove --yes --assume-yes'
             self.extension = 'deb'
-        return isfile('/etc/opkg/opkg.conf')
+            return isfile('/etc/apt/apt.conf')
 
     def info(self, name):
         try:
@@ -127,22 +125,16 @@ if [ $STB_IMAGE = 'egami' ] || [ $STB_IMAGE = 'openbh' ]; then
     update-rc.d -f softcam remove
     sleep 1
     unlink /etc/init.d/softcam
-
     sleep 1
-
     ln -sf /etc/init.d/softcam.None /etc/init.d/softcam
     update-rc.d softcam defaults
-
     if [ -e /etc/init.d/softcam.SupCam ]; then
         rm -rf /etc/init.d/softcam.SupCam
     fi
-
 fi
-
 if [ -e /etc/RELOAD.sh ]; then
     rm -rf /etc/RELOAD.sh
 fi
-
 if [ -e /etc/SUPAUTO.sh ]; then
     rm -rf /etc/SUPAUTO.sh
 fi
@@ -154,9 +146,7 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
         system("update-rc.d fixemu.sh defaults >/dev/null 2>&1")
 
     def main(self):
-
         self.Stb_Image()
-
         if not self.check('libcurl4'):
             system('clear')
             print("   >>>>   {}Please Wait{} while we Install {}libcurl4{} ...".format(G, C, Y, C))
@@ -203,10 +193,8 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
             (2) Ncam        (4) GosatPlus
             """
         self.banner()
-
         print(menu)
         choice = self.prompt(cam.keys())
-
         for number in choice:
             if number == '00':
                 system('clear')
@@ -226,7 +214,6 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                     sleep(0.8)
 
                 chdir('/tmp')
-
                 if "powercam" in value or "ultracam" in value:
                     CheckLib = popen(" ".join([self.list, 'libcrypto-compat-1.0.0'])).read().split(' - ')[0]
                     if CheckLib == 'libcrypto-compat-1.0.0':
@@ -241,23 +228,20 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
 
                 system('clear')
                 print("{}Please Wait{} while we Download And Install {}{}{} ...".format(G, C, Y, value, C))
-
                 urlretrieve("".join([self.URL, self.file]), filename=self.file)
                 sleep(0.8)
-
-                system(" ".join([self.install, self.file]))
+                system(" ".join([self.install, '/tmp/' + self.file]))
                 sleep(1)
-
                 if "supcam" in value:
                     self.FixEmu()
 
-                stb_image = popen("cut /etc/opkg/all-feed.conf -d'-' -f1 | awk '{ print $2 }'").read().replace("\n","")
-                if stb_image == "openpli":
-                    if not self.check('softcam-support'):
-                        system('clear')
-                        system(" ".join([self.install, "softcam-support"]))
-                        sleep(1)
-
+                if isfile('/etc/opkg/opkg.conf'):
+                    stb_image = popen("cut /etc/opkg/all-feed.conf -d'-' -f1 | awk '{ print $2 }'").read().replace("\n","")
+                    if stb_image == "openpli":
+                        if not self.check('softcam-support'):
+                            system('clear')
+                            system(" ".join([self.install, "softcam-support"]))
+                            sleep(1)
 
 if __name__ == '__main__':
     build = Emulator()
