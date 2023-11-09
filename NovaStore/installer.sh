@@ -113,7 +113,7 @@ elif [ "$choice" = 7 ] || [ "$choice" = 8 ]; then # NovaCam Supreme | NovaCam Su
     VerPkg='9.1-r0'
 elif [ "$choice" = 9 ]; then # IPSAT
     VerPkg='9.0-r0'
-elif [ "$choice" = 9 ]; then # IPAudioPlus
+elif [ "$choice" = 10 ]; then # IPAudioPlus
     VerPkg='3.0-r0'
 fi
 
