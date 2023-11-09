@@ -97,19 +97,19 @@ fi
 
 ####################
 
-if [ "$choice" = 1 ] || [ "$choice" = 2 ]; then
+if [ "$choice" = 1 ] || [ "$choice" = 2 ]; then # Beengo | NovalerTV
     VerPkg='8.1-r0'
-elif [ "$choice" = 3 ]; then
+elif [ "$choice" = 3 ]; then # SupTV
     VerPkg='5.0-r0'
-elif [ "$choice" = 4 ]; then
-    VerPkg='2.1-r0'
-elif [ "$choice" = 5 ]; then
+elif [ "$choice" = 4 ]; then # UltraCam
+    VerPkg='2.2-r0'
+elif [ "$choice" = 5 ]; then # Chromium2
     VerPkg='1.0+20221219-r0'
-elif [ "$choice" = 6 ]; then
+elif [ "$choice" = 6 ]; then # Novaler Store
     VerPkg='2.0-r0'
-elif [ "$choice" = 7 ] || [ "$choice" = 8 ]; then
+elif [ "$choice" = 7 ] || [ "$choice" = 8 ]; then # NovaCam Supreme | NovaCam SupTV Supreme
     VerPkg='9.1-r0'
-elif [ "$choice" = 9 ]; then
+elif [ "$choice" = 9 ]; then # IPSAT
     VerPkg='9.0-r0'
 fi
 
