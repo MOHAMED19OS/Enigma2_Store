@@ -26,7 +26,7 @@ TmpDir='/var/volatile/tmp'
 
 ####################
 #  Depends Checking  #
-arrVar=("ffmpeg" "gstplayer" "exteplayer3" "enigma2-plugin-systemplugins-serviceapp")
+arrVar=("ffmpeg" "gstplayer" "exteplayer3" "enigma2-plugin-systemplugins-serviceapp" "gstreamer1.0-plugins-base" "gstreamer1.0-plugins-base-apps" "gstreamer1.0-plugins-good")
 
 if [ "${pyVersion}" = 3 ]; then
     arrVar+=("python3-core" "python3-futures3" "python3-image" "python3-json" "python3-multiprocessing" "python3-pillow" "python3-requests" "python3-cryptography")
@@ -64,6 +64,7 @@ if [ -z "$Pkg" ]; then
     echo "  7 - NovaCam Supreme"
     echo "  8 - NovaCam SupTV Supreme"
     echo "  9 - IPSAT"
+    echo "  10 - IPAudioPlus"
     echo
     echo "  x - Exit"
     echo
@@ -80,6 +81,7 @@ if [ -z "$Pkg" ]; then
     "7") Pkg=enigma2-plugin-extensions-novacam-supreme ;;
     "8") Pkg=enigma2-plugin-extensions-novacam-suptv-supreme ;;
     "9") Pkg=enigma2-plugin-extensions-ipsat ;;
+    "10") Pkg=enigma2-plugin-extensions-ipaudioplus ;;
     x)
         clear
         echo
@@ -111,6 +113,8 @@ elif [ "$choice" = 7 ] || [ "$choice" = 8 ]; then # NovaCam Supreme | NovaCam Su
     VerPkg='9.1-r0'
 elif [ "$choice" = 9 ]; then # IPSAT
     VerPkg='9.0-r0'
+elif [ "$choice" = 9 ]; then # IPAudioPlus
+    VerPkg='3.0-r0'
 fi
 
 IFS='-'
