@@ -63,6 +63,7 @@ if [ -z "$Pkg" ]; then
     echo "  6 - Novaler Store"
     echo "  7 - NovaCam Supreme"
     echo "  8 - NovaCam SupTV Supreme"
+    echo "  9 - IPSAT"
     echo
     echo "  x - Exit"
     echo
@@ -78,6 +79,7 @@ if [ -z "$Pkg" ]; then
     "6") Pkg=enigma2-plugin-extensions-novalerstore ;;
     "7") Pkg=enigma2-plugin-extensions-novacam-supreme ;;
     "8") Pkg=enigma2-plugin-extensions-novacam-suptv-supreme ;;
+    "9") Pkg=enigma2-plugin-extensions-ipsat ;;
     x)
         clear
         echo
@@ -107,6 +109,8 @@ elif [ "$choice" = 6 ]; then
     VerPkg='2.0-r0'
 elif [ "$choice" = 7 ] || [ "$choice" = 8 ]; then
     VerPkg='9.1-r0'
+elif [ "$choice" = 9 ]; then
+    VerPkg='9.0-r0'
 fi
 
 IFS='-'
