@@ -106,7 +106,7 @@ elif [ "$choice" = 5 ]; then
 elif [ "$choice" = 6 ]; then
     VerPkg='2.0-r0'
 elif [ "$choice" = 7 ] || [ "$choice" = 8 ]; then
-    VerPkg='9.0-r0'
+    VerPkg='9.1-r0'
 fi
 
 IFS='-'
