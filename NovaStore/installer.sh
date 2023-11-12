@@ -29,9 +29,9 @@ TmpDir='/var/volatile/tmp'
 arrVar=("ffmpeg" "gstplayer" "exteplayer3" "enigma2-plugin-systemplugins-serviceapp" "alsa-plugins" "gstreamer1.0-plugins-base" "gstreamer1.0-plugins-base-apps" "gstreamer1.0-plugins-good")
 
 if [ "${pyVersion}" = 3 ]; then
-    arrVar+=("python3-core" "python3-futures3" "python3-image" "python3-json" "python3-multiprocessing" "python3-pillow" "python3-requests" "python3-cryptography")
+    arrVar+=("python3-core" "python3-futures3" "python3-image" "python3-json" "python3-multiprocessing" "python3-pillow" "python3-requests" "python3-cryptography" "python3-core")
 else
-    arrVar+=("python-core" "python-futures" "python-image" "python-imaging" "python-json" "python-multiprocessing" "python-requests" "python-cryptography")
+    arrVar+=("python-core" "python-futures" "python-image" "python-imaging" "python-json" "python-multiprocessing" "python-requests" "python-cryptography" "python-core")
 fi
 for PkgFile in "${arrVar[@]}"; do
     if ! grep -qs "Package: $PkgFile" '/var/lib/opkg/status'; then
