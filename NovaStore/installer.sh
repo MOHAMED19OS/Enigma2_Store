@@ -26,7 +26,7 @@ TmpDir='/var/volatile/tmp'
 
 ####################
 #  Depends Checking  #
-arrVar=("ffmpeg" "gstplayer" "exteplayer3" "enigma2-plugin-systemplugins-serviceapp" "alsa-plugins" "gstreamer1.0-plugins-base" "gstreamer1.0-plugins-base-apps" "gstreamer1.0-plugins-good")
+arrVar=("ffmpeg" "gstplayer" "exteplayer3" "enigma2-plugin-systemplugins-serviceapp" "alsa-plugins" "gstreamer1.0-plugins-base-meta" "gstreamer1.0-plugins-base" "gstreamer1.0-plugins-base-apps" "gstreamer1.0-plugins-good")
 
 if [ "${pyVersion}" = 3 ]; then
     arrVar+=("python3-core" "python3-futures3" "python3-image" "python3-json" "python3-multiprocessing" "python3-pillow" "python3-requests" "python3-cryptography")
