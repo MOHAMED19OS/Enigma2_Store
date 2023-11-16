@@ -4,7 +4,7 @@
 from __future__ import print_function
 
 import ssl
-from os import chdir, chmod, popen, remove, system
+from os import chmod, popen, remove, system
 from os.path import exists, isfile, join
 from re import MULTILINE, findall
 from sys import version_info
@@ -38,24 +38,25 @@ class Emulator():
     page = "https://github.com/MOHAMED19OS/Enigma2_Store/tree/main/Cam_Emulator"
 
     def __init__(self):
-        self.package = 'enigma2-plugin-softcams-'
+        self.package = "enigma2-plugin-softcams-"
 
     def Stb_Image(self):
-        if isfile('/etc/opkg/opkg.conf'):
-            self.status = '/var/lib/opkg/status'
-            self.update = 'opkg update >/dev/null 2>&1'
-            self.install = 'opkg install'
-            self.list = 'opkg list'
-            self.uninstall = 'opkg remove --force-depends'
-            self.extension = 'ipk'
+        if isfile("/etc/opkg/opkg.conf"):
+            self.status = "/var/lib/opkg/status"
+            self.update = "opkg update >/dev/null 2>&1"
+            self.install = "opkg install"
+            self.list = "opkg list"
+            self.uninstall = "opkg remove --force-depends"
+            self.extension = "ipk"
+            return "OpenSource"
         else:
-            self.status = '/var/lib/dpkg/status'
-            self.update = 'apt-get update >/dev/null 2>&1'
-            self.install = 'apt-get install'
-            self.list = 'apt-get list'
-            self.uninstall = 'apt-get purge --auto-remove'
-            self.extension = 'deb'
-        return isfile('/etc/opkg/opkg.conf')
+            self.status = "/var/lib/dpkg/status"
+            self.update = "apt-get update >/dev/null 2>&1"
+            self.install = "apt-get install --fix-broken --yes --assume-yes"
+            self.list = "apt-get list"
+            self.uninstall = "apt-get purge --auto-remove"
+            self.extension = "deb"
+            return "DreamOS"
 
     def info(self, name):
         try:
@@ -162,7 +163,7 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
             print("   >>>>   {}Please Wait{} while we Install {}libcurl4{} ...".format(G, C, Y, C))
             system('{};{} libcurl4'.format(self.update, self.install))
 
-        if self.Stb_Image():
+        if self.Stb_Image() == "OpenSource":
             cam = {
                 "1": "".join([self.package, "oscam"]),
                 "2": "".join([self.package, "ncam"]),
@@ -225,8 +226,6 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                     remove(self.file)
                     sleep(0.8)
 
-                chdir('/tmp')
-
                 if "powercam" in value or "ultracam" in value:
                     CheckLib = popen(" ".join([self.list, 'libcrypto-compat-1.0.0'])).read().split(' - ')[0]
                     if CheckLib == 'libcrypto-compat-1.0.0':
@@ -239,24 +238,37 @@ sed -i '/SUPAUTO/d' {}\n""".format(self.RootPath, self.RootPath))
                             print("   >>>>   {}Please Wait{} while we Install {}libcrypto-compat{} ...".format(G, C, Y, C))
                             system(" ".join([self.install, "libcrypto-compat"]))
 
-                system('clear')
-                print("{}Please Wait{} while we Download And Install {}{}{} ...".format(G, C, Y, value, C))
+                try:
+                    system('clear')
+                    print(">>> {}Downloading{} >>> {}{}{} ...".format(G, C, Y, value, C))
 
-                urlretrieve("".join([self.URL, self.file]), filename=self.file)
-                sleep(0.8)
+                    FullFileName = join('/tmp/', self.file)
+                    urlretrieve("".join([self.URL, self.file]), FullFileName)
+                    sleep(1)
+                except HTTPError as e:
+                    print('·{}HTTP Error{} code: '.format(R,C), e.code)
+                    exit()
 
-                system(" ".join([self.install, self.file]))
-                sleep(1)
+                if exists(join("/tmp/", self.file)):
+                    system('clear')
+                    print(">>> {}Installing{} >>> {}{}{} ...".format(G, C, Y, value, C))
+                    system(" ".join([self.install, '/tmp/' + self.file]))
+                    sleep(1)
 
-                if "supcam" in value:
-                    self.FixEmu()
+                    if "supcam" in value:
+                        self.FixEmu()
 
-                stb_image = popen("cut /etc/opkg/all-feed.conf -d'-' -f1 | awk '{ print $2 }'").read().replace("\n","")
-                if stb_image == "openpli":
-                    if not self.check('softcam-support'):
-                        system('clear')
-                        system(" ".join([self.install, "softcam-support"]))
-                        sleep(1)
+                    if self.Stb_Image() == "OpenSource":
+                        CheckImage = popen("cut /etc/opkg/all-feed.conf -d'-' -f1 | awk '{ print $2 }'").read().replace("\n","")
+                        if CheckImage == "openpli":
+                            if not self.check('softcam-support'):
+                                system('clear')
+                                system(" ".join([self.install, "softcam-support"]))
+                                sleep(1)
+                else:
+                    print("Sorry {} Not Download ..!\n   Written by {}MOHAMED_OS{} (͡๏̯͡๏)".format(Y, value, C,R, C))
+                    exit()
+
 
 
 if __name__ == '__main__':
