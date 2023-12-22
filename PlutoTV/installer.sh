@@ -14,7 +14,7 @@ if [ -f /etc/opkg/opkg.conf ]; then
     OPKGINSTAL='opkg install'
     OPKGLIST='opkg list-installed'
     OPKGREMOV='opkg remove --force-depends'
-    VERSION='20231021'
+    VERSION='20231210'
 elif [ -f /etc/apt/apt.conf ]; then
     STATUS='/var/lib/dpkg/status'
     OSTYPE='DreamOS'
