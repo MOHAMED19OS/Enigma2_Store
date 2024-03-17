@@ -1,4 +1,4 @@
-oscam=11748-emu-r799
+oscam=11748-emu-r800
 ncam=14.6-r0
 gosatplus=2.0
 powercam=3.0
